@@ -15,7 +15,7 @@ Currently, there is no system to protect their daily earnings during such disrup
 ---
 
 ## 💡 Solution
-ValorShield provides a parametric insurance system where:
+Valor Shield provides a parametric insurance system where:
 - Workers pay a small weekly premium
 - External disruptions are monitored in real-time
 - AI validates the legitimacy of the disruption and impact
