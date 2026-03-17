@@ -1,7 +1,7 @@
-# 🛡 ValorShield
+# 🛡 Valor Shield
 
 ## 🚀 Overview
-ValorShield is an AI-powered parametric micro-insurance platform designed to protect gig delivery workers from income loss caused by external disruptions such as extreme weather, pollution, and urban restrictions.
+Valor Shield is an AI-powered parametric micro-insurance platform designed to protect gig delivery workers from income loss caused by external disruptions such as extreme weather, pollution, and urban restrictions.
 
 Workers subscribe to a weekly insurance plan and receive automatic compensation when disruptions prevent them from working.
 
