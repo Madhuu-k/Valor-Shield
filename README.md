@@ -72,6 +72,3 @@ User → Select Plan → Monitoring → Disruption Detected → AI Validation �
 Unlike traditional systems, ValorShield combines parametric triggers with AI-based validation and activity analysis to ensure accurate, fraud-resistant payouts.
 
 ---
-
-## 🎥 Demo Video
-(Link will be added here)
