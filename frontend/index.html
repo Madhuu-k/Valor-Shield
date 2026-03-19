@@ -1,13 +1,282 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Valor Shield</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top, #1e293b, #020617);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            width: 100%;
+            padding: 40px 60px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 6px;
+        }
+
+        p.subtitle {
+            color: #94a3b8;
+            margin-bottom: 32px;
+        }
+
+        /* INPUTS ROW */
+        .inputs-wrap { display: flex; flex-direction: column; gap: 8px; }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 11px;
+            color: #94a3b8;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        input, select {
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid #1e3a5f;
+            background: #1e293b;
+            color: white;
+            font-size: 14px;
+            width: 100%;
+            height: 44px;
+        }
+
+        input.error {
+            border-color: #ef4444;
+        }
+
+        input:focus, select:focus {
+            outline: 2px solid #22c55e;
+            border-color: transparent;
+        }
+
+        .error-msg {
+            font-size: 12px;
+            color: #ef4444;
+        }
+
+        button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #22c55e, #4ade80);
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+            height: 44px;
+            margin-top: 17px;
+        }
+
+        button:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 15px #22c55e;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #1e3a5f;
+            margin: 32px 0;
+        }
+
+        #result { flex: 1; }
+
+        .result {
+            padding: 28px 32px;
+            border-radius: 12px;
+            background: rgba(2, 6, 23, 0.8);
+            border: 1px solid #334155;
+            animation: fadeIn 0.4s ease-in-out;
+            display: grid;
+            grid-template-columns: auto 1fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        .result-risk h2 {
+            font-size: 16px;
+            color: #94a3b8;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .low    { background: #22c55e; color: black; }
+        .medium { background: #facc15; color: black; }
+        .high   { background: #ef4444; color: white; }
+
+        .result-premium h3 {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+        }
+
+        .result-premium .amount {
+            font-size: 36px;
+            font-weight: bold;
+            color: #22c55e;
+        }
+
+        .result-insight p {
+            color: #94a3b8;
+            line-height: 1.6;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .result-insight p b { color: white; }
+
+        .empty {
+            color: #334155;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1>🛡️ Valor Shield</h1>
+    <p class="subtitle">AI-powered insurance for gig workers</p>
+
+    <div class="inputs-wrap">
+        <div class="inputs">
+            <div class="input-group">
+                <label>Worker Type</label>
+                <select id="worker">
+                    <option value="driver">🚗 Driver</option>
+                    <option value="delivery">📦 Delivery</option>
+                    <option value="freelancer">💻 Freelancer</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Hours Worked</label>
+                <input type="number" id="hours" placeholder="e.g. 5" min="0" max="24"/>
+            </div>
+
+            <div class="input-group">
+                <label>Time of Day</label>
+                <select id="time">
+                    <option value="day">☀️ Day</option>
+                    <option value="night">🌙 Night</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Weather</label>
+                <select id="weather">
+                    <option value="normal">🌤 Normal</option>
+                    <option value="moderate">🌧 Moderate Rain</option>
+                    <option value="severe">⛈ Severe Rain</option>
+                    <option value="extreme">🌪 Extreme Rain</option>
+                </select>
+            </div>
+
+            <button onclick="analyzeRisk()">🚀 Analyze Risk</button>
+        </div>
+        <span class="error-msg" id="hoursError"></span>
+    </div>
+
+    <hr class="divider"/>
+
+    <div id="result">
+        <p class="empty">Your risk assessment will appear here once you analyze.</p>
+    </div>
+</div>
+
+<script>
+async function analyzeRisk() {
+    const worker   = document.getElementById("worker").value;
+    const hours    = document.getElementById("hours").value.trim();
+    const time     = document.getElementById("time").value;
+    const weather  = document.getElementById("weather").value;
+    const hoursInput = document.getElementById("hours");
+    const hoursError = document.getElementById("hoursError");
+
+    // Validation
+    hoursInput.classList.remove("error");
+    hoursError.textContent = "";
+
+    if (!hours || isNaN(hours) || Number(hours) < 0 || Number(hours) > 24) {
+        hoursInput.classList.add("error");
+        hoursError.textContent = "Not entered — please enter hours (0–24)";
+        return;
+    }
+
+    try {
+        const res = await fetch("http://127.0.0.1:5000/analyze", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ worker, hours, time, weather })
+        });
+
+        const data = await res.json();
+
+        let badgeClass = "low";
+        if (data.risk === "Medium") badgeClass = "medium";
+        if (data.risk === "High")   badgeClass = "high";
+
+        document.getElementById("result").innerHTML = `
+            <div class="result">
+                <div class="result-risk">
+                    <h2>Risk Level</h2>
+                    <span class="badge ${badgeClass}">${data.risk}</span>
+                </div>
+                <div class="result-premium">
+                    <h3>💰 Daily Premium</h3>
+                    <div class="amount">₹${data.premium}</div>
+                </div>
+                <div class="result-insight">
+                    <p>🧠 <b>AI Insight:</b> ${data.explanation}</p>
+                    <p>📊 <b>Confidence:</b> ${data.confidence}</p>
+                </div>
+            </div>
+        `;
+    } catch (e) {
+        document.getElementById("result").innerHTML = `<p style="color:#ef4444;font-size:14px;">Could not connect to backend. Make sure your Flask server is running.</p>`;
+    }
+}
+</script>
+</body>
+</html> 
