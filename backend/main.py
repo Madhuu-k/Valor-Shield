@@ -10,6 +10,7 @@ def analyze():
 
     # Inputs
     worker = data.get("worker")
+    plan = data.get("plan")
     hours = int(data.get("hours"))
     time = data.get("time")
     weather = data.get("weather")
@@ -53,7 +54,19 @@ def analyze():
     else:
         risk = "High"
         premium = 200
-
+        
+    if plan == "basic":
+        multiplier = 1
+        coverage = "Minimal coverage"
+    elif plan == "premium":
+        multiplier = 1.5
+        coverage = "Standard accident + health coverage"
+    else:
+        multiplier = 2
+        coverage = "Full coverage with income protection"
+        
+    premium = int(premium * multiplier)
+    
     # 🧠 Explanation (dynamic)
     explanation = (
         f"Risk influenced by {worker} work, {time} shift, "
@@ -70,6 +83,8 @@ def analyze():
 
     return jsonify({
         "risk": risk,
+        "plan": plan.capitalize(),
+        "coverage": coverage,
         "premium": premium,
         "explanation": explanation,
         "confidence": confidence
